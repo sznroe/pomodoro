@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Pomodoro</title>
+	<link rel='stylesheet' type='text/css' href='app.css'>
+</head>
+<body>
+	<div id='main-container'>
+			<h2 id='clock'></h2>
+		</div>
+
+		<div id='alarm-container'>
+			<h1>Next <span class="status"></span> will be in: <span id="alarmTime"></span></h1>
+				<label>
+					<div>
+					<span id="alarmHours"></span>
+					</div>
+				</label>
+				<label>
+					<div>
+					<span id='alarmMins'></span>
+					</div>
+				</label>
+				<label>
+					<div>
+					<span id='alarmSecs' ></span>
+					</div>
+				</label>
+				<label>
+					<div>
+						<span id="ampm"></span>
+					</div>
+				</label>
+				</div>
+		</div>
+
+		<div id='buttonHolder'>
+			<div>
+				<button  id='setButton' onClick='alarmSet(25)'>Start</button>
+			</div>
+		</div>
+</body>
+<script src="app.js"></script>
+</html>
