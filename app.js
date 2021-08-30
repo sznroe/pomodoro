@@ -1,15 +1,17 @@
 var sound = new Audio("https://www.freespecialeffects.co.uk/soundfx/cartoon/twang1.wav");
 var breakSound = new Audio("https://www.freespecialeffects.co.uk/soundfx/doors/doorbell2.wav");
+var longBreakSound = new Audio("https://www.wavsource.com/snds_2020-10-01_3728627494378403/music/outta_here.wav");
 
 var h2 = document.getElementById('clock');
 let globalCounter = 0;
-let longBreakCounter = 5;
-let shortMinBreak = 5;
-let longMinBreak = 30;
-let workTime = 25;
+const longBreakCounter = 5;
+const shortMinBreak = 5;
+const longMinBreak = 30;
+const workTime = 25;
 const workStatus = "WORK";
 const breakStatus = "BREAK";
 let status = workStatus;
+let statusElm = document.querySelector('.status');
 
 var currentTime = setInterval(function() {
     var date = new Date();
@@ -47,6 +49,7 @@ function alarmSet(breakMins) {
     document.getElementById('alarmTime').textContent = alarmTime;
 
     var h2 = document.getElementById('clock');
+    statusElm.textContent = getNextStatus(status);
 
     setInterval(function() {
         var date = new Date();
@@ -58,17 +61,16 @@ function alarmSet(breakMins) {
 
         if (alarmTime == currentTime) {
             changeStatus();
-            globalCounter++;
 
-            if (status == breakStatus) {
-                breakSound.play();
-                if (globalCounter == longBreakCounter)
+            if (isBreakTime()) {
+                globalCounter++;
+                if (isLongBreak())
                 {
-                    alarmSet(longMinBreak)
+                    takeLongBreak();
                 }
                 else
                 {
-                    alarmSet(shortMinBreak)
+                    takeShortBreak();
                 }
             }
             else
@@ -98,4 +100,32 @@ function getHoursFromDate(date)
 function changeStatus()
 {
     status = status == workStatus ? breakStatus : workStatus;
+}
+
+function getNextStatus(currentStatus)
+{
+    return currentStatus == workStatus ? breakStatus : workStatus;
+}
+
+function isBreakTime()
+{
+    return status == breakStatus;
+}
+
+function isLongBreak()
+{
+    return globalCounter == longBreakCounter;
+}
+
+function takeLongBreak()
+{
+    longBreakSound.play();
+    alarmSet(longMinBreak)
+    globalCounter = 0;
+}
+
+function takeShortBreak()
+{
+    breakSound.play();
+    alarmSet(shortMinBreak)
 }
